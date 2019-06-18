@@ -56,10 +56,10 @@ class WebViewHelper extends StatelessWidget {
 
   void setListener(context, flutterWebviewPlugin) {
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
-      if (url.contains('baidu')) {
-        print('监听到网页变化');
-        Navigator.of(context).pop();
-      }
+//      if (url.contains('baidu')) {
+//        print('监听到网页变化');
+//        Navigator.of(context).pop();
+//      }
     });
 
     flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged url) {

@@ -1,3 +1,4 @@
+import 'package:copy_station/helper/data.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
 import 'package:page_view_indicator/page_view_indicator.dart';
@@ -12,6 +13,11 @@ class IntroView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    double width = ScreenUtil.screenWidth;
+    double height = ScreenUtil.screenHeight;
+    print('屏幕的宽度为:${width},屏幕的高度为:${height}');
+    Data.width = width;
+    Data.height = height;
     final pages = [
       _indexPage1(),
       _indexPage2(),

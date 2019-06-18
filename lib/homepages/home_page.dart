@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:copy_station/provider/city_provider.dart';
 import 'package:copy_station/provider/search_provider.dart';
@@ -26,28 +27,33 @@ class HomePage extends StatelessWidget {
     requestPermission(PermissionGroup.location);
     requestPermission(PermissionGroup.locationAlways);
     requestPermission(PermissionGroup.locationWhenInUse);
-    return Scaffold(
-      drawer: buildDrawer(),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: _titleWidget(context),
-        titleSpacing: 0.1,
-        actions: <Widget>[_cityWidget(context)],
-      ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              AutoSwipe(),
-              Amap_Navigator(),
-              StationInfo(),
-              StationInfo(),
-              StationInfo(),
-            ],
+    return WillPopScope(
+      child: Scaffold(
+        drawer: buildDrawer(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: _titleWidget(context),
+          titleSpacing: 0.1,
+          actions: <Widget>[_cityWidget(context)],
+        ),
+        body: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                AutoSwipe(),
+                Amap_Navigator(),
+                StationInfo(),
+                StationInfo(),
+                StationInfo(),
+              ],
+            ),
           ),
         ),
       ),
+      onWillPop: (){
+        exit(0);
+      },
     );
   }
 
@@ -125,7 +131,6 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(color: Colors.brown),
               );
             }),
-            FutureBuilder(),
           ],
         ),
       ),

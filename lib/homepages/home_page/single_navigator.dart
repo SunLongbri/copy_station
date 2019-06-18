@@ -28,7 +28,8 @@ class SingleNavigator extends StatelessWidget {
                   textTitle.contains('休闲空间') ||
                   textTitle.contains('其他')) {
 //                String url = "https://www.siruish.cn/test";
-                String url = "http://192.168.1.116:8080/map?pos=上海市";
+                String url = "http://192.168.1.129:8080/map?pos=上海市";
+//                String url = "http://www.baidu.com";
                 var json = jsonEncode(Utf8Encoder().convert(url));
                 Application.router.navigateTo(
                     context, '${Routes.webViewHelper}?weburl=$json');
@@ -49,7 +50,7 @@ class SingleNavigator extends StatelessWidget {
           Text(
             textContent,
             style:
-                TextStyle(color: Colors.grey, fontSize: ScreenUtil().setSp(15)),
+                TextStyle(color: Colors.grey, fontSize: ScreenUtil(allowFontScaling: true).setSp(15)),
           ),
         ],
       ),
