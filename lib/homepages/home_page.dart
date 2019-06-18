@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
 import 'city_page/city_model.dart';
 import 'drawer/left_drawer.dart';
 import 'home_page/amap_navigator.dart';
@@ -51,7 +50,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      onWillPop: (){
+      onWillPop: () {
         exit(0);
       },
     );
