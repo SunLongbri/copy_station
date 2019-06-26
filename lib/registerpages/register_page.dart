@@ -1,5 +1,6 @@
 import 'package:copy_station/helper/Toast.dart';
 import 'package:copy_station/helper/wechat_helper.dart';
+import 'package:copy_station/net/service_method.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +13,11 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('当前刷新了RegisterPage页面!');
-    _initFluwx();
+    initFluwx();
+    //登录接口的调用
+    loginByPhoneAndEmail('htgsuda', '123qwe').then((val) {
+      print('请求返回结果:${val}');
+    });
     return Scaffold(
       appBar: AppBar(
         leading: Text(""),
@@ -114,9 +119,8 @@ class RegisterPage extends StatelessWidget {
               String _url =
                   "https://www.easy-mock.com/mock/5c74edefa4b357117cec9ce5/flutter_shop/fluwx_pay";
               print('点击了微信登录 ... ');
-//              _aliPay();
-              _searchApp(context);
-//              _pay(_url);
+
+              loginByWX(context);
             },
             child: Image.asset(
               'images/wechat_icon.png',
@@ -126,7 +130,7 @@ class RegisterPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              _wechatShareWeb();
+              wechatShareWeb();
             },
             child: Image.asset(
               'images/message_icon.png',
@@ -139,40 +143,9 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  _initFluwx() async {
-    await fluwx.register(appId: "wx8eaa46b891bb15c5");
-  }
-
-  _searchApp(BuildContext context) async {
-    var isInstalled = await fluwx.isWeChatInstalled();
-    print('微信是否安装:${isInstalled}');
-    fluwx.responseFromAuth.listen((data) {
-      print(
-          '监听到微信登录的结果为:${data.code},errorCode is :${data.errCode} ,errorStr is :${data.errStr}');
-      if (data.errCode == 0) {
-        Application.router.navigateTo(context, Routes.homePage);
-        Toast.show(context, '登录成功!');
-      } else if (data.errCode == -4) {
-        Toast.show(context, '用户已拒绝!');
-      }
-    });
-    fluwx.sendAuth(scope: 'snsapi_userinfo', state: 'wechat_sdk_demo_test');
-  }
-
   _aliPay() async {
     var result = await tobias.isAliPayInstalled();
     print('支付宝客户端是否安装:${result}');
-  }
-
-  //微信分享网页
-  _wechatShareWeb() async {
-    var model = fluwx.WeChatShareWebPageModel(
-        webPage: "https://www.baidu.com",
-        title: "下方的人什么都会，不信你点进去看看。",
-        thumbnail: "assets://images/my_icon.png",
-        scene: fluwx.WeChatScene.SESSION,
-        transaction: "hh");
-    fluwx.share(model);
   }
 
   _pay(_url) async {
