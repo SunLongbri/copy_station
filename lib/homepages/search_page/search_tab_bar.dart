@@ -67,16 +67,16 @@ class SearchTabBar extends StatelessWidget {
               '历史搜索',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: ScreenUtil().setSp(40),
-                  fontWeight: FontWeight.w500),
+                  fontSize: ScreenUtil().setSp(30),
+                  fontWeight: FontWeight.w800),
             ),
           ),
           Container(
-            width: ScreenUtil().setWidth(50),
-            height: ScreenUtil().setHeight(50),
+            width: ScreenUtil().setWidth(35),
+            height: ScreenUtil().setHeight(35),
             padding: EdgeInsets.only(
-                left: ScreenUtil().setWidth(5),
-                right: ScreenUtil().setWidth(5)),
+                left: ScreenUtil().setWidth(3),
+                right: ScreenUtil().setWidth(3)),
             child: InkWell(
               onTap: () {
                 print('点击了删除按钮!');
@@ -130,7 +130,7 @@ class SearchTabBar extends StatelessWidget {
           child: Text(
             content,
             style: TextStyle(
-                color: Colors.black, fontSize: ScreenUtil().setSp(35)),
+                color: Color(0xFF303030), fontSize: ScreenUtil().setSp(27),fontWeight: FontWeight.w400),
           ),
         ),
         decoration: BoxDecoration(

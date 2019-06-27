@@ -1,13 +1,9 @@
-import 'package:copy_station/helper/Toast.dart';
-import 'package:copy_station/helper/wechat_helper.dart';
 import 'package:copy_station/net/service_method.dart';
+import 'package:copy_station/net/service_wx.dart';
 import 'package:copy_station/routers/application.dart';
-import 'package:copy_station/routers/routes.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
-import 'package:tobias/tobias.dart' as tobias;
+
 
 class RegisterPage extends StatelessWidget {
   @override
@@ -143,50 +139,4 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  _aliPay() async {
-    var result = await tobias.isAliPayInstalled();
-    print('支付宝客户端是否安装:${result}');
-  }
-
-  _pay(_url) async {
-    fluwx.responseFromPayment.listen((data) {
-      print(
-          'data.extData : ${data.extData} data.errCode : ${data.errCode}  data.errStr : ${data.errStr}');
-    });
-    var result = await postHttp(_url);
-    print('返回来的结果为:${result}');
-    print(result['appid']);
-    print(result["timestamp"]);
-    fluwx
-        .pay(
-      appId: result['appid'].toString(),
-      partnerId: result['partnerid'].toString(),
-      prepayId: result['prepayid'].toString(),
-      packageValue: result['package'].toString(),
-      nonceStr: result['noncestr'].toString(),
-      timeStamp: result['timestamp'],
-      sign: result['sign'].toString(),
-//      appId: 'wxd930ea5d5a258f4f',
-//      partnerId: '1900000109',
-//      prepayId: '1101000000140415649af9fc314aa427',
-//      packageValue: 'Sign=WXPay',
-//      nonceStr: '1101000000140429eb40476f8896f4c9',
-//      timeStamp: 1398746574,
-//      sign: '7FFECB600D7157C5AA49810D2D8F28BC2811827B',
-    )
-        .then((data) {
-      print("---》$data");
-    });
-  }
-
-  Future postHttp(String url) async {
-    try {
-      Response response;
-      //get请求:https://www.easy-mock.com/mock/5c60131a4bed3a6342711498/baixing/dabaojian
-      response = await Dio().post(url);
-      return response.data;
-    } catch (e) {
-      return print(e);
-    }
-  }
 }

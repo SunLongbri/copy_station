@@ -1,3 +1,4 @@
+import 'package:copy_station/helper/data.dart';
 import 'package:copy_station/homepages/drawer/func_list.dart';
 import 'package:copy_station/homepages/drawer/show_station.dart';
 import 'package:copy_station/homepages/drawer/top_login.dart';
@@ -7,7 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 Drawer buildDrawer() {
   return Drawer(
     child: Container(
-      height: ScreenUtil().setHeight(1334),
+      height: ScreenUtil().setHeight(Data.height),
+//      width: ScreenUtil().setWidth(750),
       child: Stack(
         children: <Widget>[
           Column(

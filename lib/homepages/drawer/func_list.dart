@@ -35,7 +35,7 @@ class FuncList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(ScreenUtil().setWidth(30)),
+              padding: EdgeInsets.all(ScreenUtil().setWidth(28)),
               child: Image.asset(
                 imageUrl,
                 width: ScreenUtil().setWidth(50),

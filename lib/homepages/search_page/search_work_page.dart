@@ -49,15 +49,19 @@ class SearchWorkPage extends StatelessWidget {
 
   Widget _titleWidget() {
     return Container(
-      height: ScreenUtil().setHeight(70),
+      height: ScreenUtil().setHeight(75),
       child: Container(
-        margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+        margin: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
         child: TextField(
           cursorColor: Colors.grey,
           decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '输入您想租用的办公室或社区空间或地点',
-              hintStyle: TextStyle(fontSize: ScreenUtil().setSp(27))),
+            border: InputBorder.none,
+            hintText: '输入您想租用的办公室或社区空间或地点',
+            hintStyle: TextStyle(
+                fontSize: ScreenUtil().setSp(25),
+                color: Colors.grey,
+                fontWeight: FontWeight.w500),
+          ),
         ),
       ),
       decoration: BoxDecoration(

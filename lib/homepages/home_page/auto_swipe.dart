@@ -1,3 +1,4 @@
+import 'package:copy_station/helper/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -12,8 +13,8 @@ class AutoSwipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(300),
-      width: ScreenUtil().setWidth(750),
+      height: ScreenUtil().setHeight(280),
+      width: ScreenUtil().setWidth(Data.width),
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           return InkWell(

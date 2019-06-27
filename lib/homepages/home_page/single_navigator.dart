@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:copy_station/helper/Toast.dart';
+import 'package:copy_station/provider/type_provider.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class SingleNavigator extends StatelessWidget {
   final String imageUrl;
@@ -14,6 +17,7 @@ class SingleNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TypeProvider typeProvider = Provider.of<TypeProvider>(context);
     return Container(
       child: Column(
         children: <Widget>[
@@ -21,6 +25,10 @@ class SingleNavigator extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () {
+              if (typeProvider.netError == true) {
+                Toast.show(context, '请检查你的网络链接');
+                return;
+              }
               if (textTitle.contains('教育培训') ||
                   textTitle.contains('会议室') ||
                   textTitle.contains('工位') ||
@@ -45,12 +53,16 @@ class SingleNavigator extends StatelessWidget {
           Text(
             textTitle,
             style: TextStyle(
-                color: Colors.brown, fontSize: ScreenUtil().setSp(35)),
+                color: Colors.brown,
+                fontSize: ScreenUtil().setSp(32),
+                fontWeight: FontWeight.w500),
           ),
           Text(
             textContent,
-            style:
-                TextStyle(color: Colors.grey, fontSize: ScreenUtil(allowFontScaling: true).setSp(15)),
+            style: TextStyle(
+                color: Color(0x30040000),
+                fontSize: ScreenUtil(allowFontScaling: true).setSp(18),
+                fontWeight: FontWeight.w500),
           ),
         ],
       ),

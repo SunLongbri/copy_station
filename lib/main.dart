@@ -5,8 +5,8 @@ import 'package:copy_station/provider/tab_provider.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
 import 'package:copy_station/splashpage/intro_view.dart';
-import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:provider/provider.dart';
 
@@ -21,9 +21,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     final router = Router();
     Routes.configureRoutes(router);
     Application.router = router;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

@@ -1,17 +1,27 @@
 import 'package:copy_station/helper/data.dart';
 import 'package:copy_station/homepages/home_page/single_navigator.dart';
+import 'package:copy_station/provider/type_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
 class Amap_Navigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+
     double containerHeight = 0;
     double setHeight = 0;
     if (Data.height > 1919 && Data.height <= 1920) {
       containerHeight = 460;
       setHeight = 210;
+    } else if(Data.height == 2160){
+      containerHeight = 410;
+      setHeight = 188;
+    } else if(Data.height == 2016){
+      containerHeight = 440;
+      setHeight = 200;
     } else {
       containerHeight = 410;
       setHeight = 188;

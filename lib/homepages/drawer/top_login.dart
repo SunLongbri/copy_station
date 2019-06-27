@@ -5,8 +5,8 @@ class TopLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtil().setWidth(700),
-      height: ScreenUtil().setHeight(300),
+      width: ScreenUtil().setWidth(633),
+      height: ScreenUtil().setHeight(259),
       color: Colors.brown,
       child: Row(
         children: <Widget>[
@@ -21,7 +21,7 @@ class TopLogin extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: ScreenUtil().setWidth(30),top: ScreenUtil().setHeight(40)),
       child: CircleAvatar(
-        backgroundImage: AssetImage('images/wechat_test.png'),
+        backgroundImage: AssetImage('images/person_icon.png'),
         radius: 30.0,
       ),
     );
