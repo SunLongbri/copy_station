@@ -24,9 +24,12 @@ import 'package:copy_station/homepages/drawer/personal_center/set_pass_page.dart
 import 'package:copy_station/homepages/drawer/personal_center/set_pay_pass.dart';
 import 'package:copy_station/homepages/drawer/personal_center/setting_page.dart';
 import 'package:copy_station/homepages/search_page/search_work_page.dart';
-import 'package:copy_station/registerpages/code_page.dart';
-import 'package:copy_station/registerpages/mail_page.dart';
-import 'package:copy_station/registerpages/register_page.dart';
+import 'package:copy_station/login/pass_login/forget_pass_page.dart';
+import 'package:copy_station/login/pass_login/user_pass_page.dart';
+import 'package:copy_station/login/phone_code_page/main_code_page.dart';
+import 'package:copy_station/login/register_login/register_code_page.dart';
+import 'package:copy_station/login/register_login/register_phone_page.dart';
+import 'package:copy_station/login/login_page.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
@@ -35,19 +38,19 @@ import 'package:copy_station/homepages/home_page.dart';
 Handler registerHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   print('registerHandler ---> params:${params}');
-  return RegisterPage();
+  return LoginPage();
 });
 
 Handler codeHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   print('codeHandler ---> params:${params}');
-  return CodePage();
+  return RegisterPhonePage();
 });
 
 Handler mailHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   print('mailHandler ---> params:${params}');
-  return MailPage();
+  return RegisterCodePage();
 });
 
 Handler homeHandler = Handler(
@@ -199,4 +202,21 @@ Handler webViewFlutterHandler = Handler(
   String webUrl = params['weburl'].first;
   print('webViewFlutterHandler ---> params:${params}');
   return WebViewFlutter(webUrl);
+});
+
+Handler mainCodeHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+//  String webUrl = params['weburl'].first;
+//  print('webViewFlutterHandler ---> params:${params}');
+  return MainCodePage();
+});
+
+Handler userPassHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return UserPassPage();
+});
+
+Handler forgetPassHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return ForgetPassPage();
 });

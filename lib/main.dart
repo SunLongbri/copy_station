@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: Application.router.generator,
         theme: ThemeData(
           primarySwatch: Colors.grey,
+          scaffoldBackgroundColor: Colors.white
         ),
         home: IntroView(),
       ),

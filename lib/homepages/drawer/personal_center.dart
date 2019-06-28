@@ -4,7 +4,7 @@ import 'package:copy_station/routers/application.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../color.dart';
+import 'package:copy_station/helper/color.dart';
 
 class PersonalCenter extends StatelessWidget {
   @override

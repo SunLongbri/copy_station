@@ -34,6 +34,9 @@ class Routes {
   static String myOrderPage = '/myOrder';
   static String webViewHelper = '/webView';
   static String webViewFlutter = '/webViewFlutter';
+  static String mainCodePage = '/mainCode';
+  static String userPassPage = '/userPass';
+  static String forgetPassPage = '/forgetPass';
 
   static void configureRoutes(Router router) {
     //当没有找到对应的路由时
@@ -72,5 +75,8 @@ class Routes {
     router.define(myOrderPage, handler: myOrderHandler);
     router.define(webViewHelper, handler: webViewHandler);
     router.define(webViewFlutter, handler: webViewFlutterHandler);
+    router.define(mainCodePage, handler: mainCodeHandler);
+    router.define(userPassPage, handler: userPassHandler);
+    router.define(forgetPassPage, handler: forgetPassHandler);
   }
 }

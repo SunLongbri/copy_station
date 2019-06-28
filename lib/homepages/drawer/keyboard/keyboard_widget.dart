@@ -1,9 +1,7 @@
-
 import 'package:copy_station/homepages/drawer/keyboard/pay_password.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_keyboard_button.dart';
-
 
 /// 自定义密码 键盘
 
@@ -24,6 +22,7 @@ class MyKeyboardStat extends State<MyKeyboard> {
   /// 定义 确定 按钮 接口  暴露给调用方
   ///回调函数执行体
   var backMethod;
+
   void onCommitChange() {
     widget.callback(new KeyEvent("commit"));
   }
@@ -78,12 +77,12 @@ class MyKeyboardStat extends State<MyKeyboard> {
     return new Container(
       key: _scaffoldKey,
       width: double.infinity,
-      height: 250.0,
+      height: 235.0,
       color: Colors.white,
       child: new Column(
         children: <Widget>[
           new Container(
-            height:30.0,
+            height: 30.0,
             color: Colors.white,
             alignment: Alignment.center,
             child: new Text(

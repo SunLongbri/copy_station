@@ -215,7 +215,7 @@ class IntroView extends StatelessWidget {
               child: Text(
                 '登录',
                 style: TextStyle(
-                    color: Colors.white, fontSize: ScreenUtil().setSp(32)),
+                    color: Colors.white,fontSize: ScreenUtil().setSp(38)),
               ),
             ),
           ),

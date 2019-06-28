@@ -40,6 +40,19 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
           drawer: buildDrawer(),
           appBar: AppBar(
+            leading: Builder(
+              builder: (context) => GestureDetector(
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
+                    child: Image.asset('images/home_leading_icon.png'),
+                  )
+                ),
+                onTap: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
+
             backgroundColor: Colors.white,
             elevation: 0,
             title: _titleWidget(context),

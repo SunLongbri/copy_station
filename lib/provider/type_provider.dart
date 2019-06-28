@@ -7,13 +7,21 @@ class TypeProvider with ChangeNotifier {
   bool _invoceCommonType = false;
   bool _invoceSpecialType = false;
   int _languageType = 1;
+  bool _smsState = false; //验证码是否发送成功，true表示发送成功，false表示发送失败
 
   bool _isPhone = true;
 
   get isPhone => _isPhone;
 
+  get smsState => _smsState;
+
   set phoneState(bool isPhone) {
     _isPhone = isPhone;
+    notifyListeners();
+  }
+
+  set smsState(bool state) {
+    _smsState = state;
     notifyListeners();
   }
 

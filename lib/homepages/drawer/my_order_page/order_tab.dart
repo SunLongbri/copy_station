@@ -5,7 +5,7 @@ import 'package:copy_station/routers/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../color.dart';
+import 'package:copy_station/helper/color.dart';
 
 class OrderTabBar extends StatelessWidget {
   final List<Tab> myTabs = <Tab>[

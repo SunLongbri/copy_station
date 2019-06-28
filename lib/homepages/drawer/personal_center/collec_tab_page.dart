@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../color.dart';
+import 'package:copy_station/helper/color.dart';
 import 'collec_tab_left.dart';
 import 'collec_tab_right.dart';
 
