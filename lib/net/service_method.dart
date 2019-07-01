@@ -13,11 +13,7 @@ Future loginByPhoneAndEmail(String username, String password) async {
     dio.options.contentType =
         ContentType.parse('application/x-www-form-urlencoded');
     var formData = {
-      'client_id': 'system',
-      'client_secret': 'system',
-      'grant_type': 'password',
-      'scopes': 'app',
-      'username': username,
+      'identity': username,
       'password': password,
     };
     response = await dio.post(servicePath['login'], data: formData);

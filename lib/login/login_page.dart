@@ -1,5 +1,4 @@
 import 'package:copy_station/helper/data.dart';
-import 'package:copy_station/model/user_login_model.dart';
 import 'package:copy_station/net/service_method.dart';
 import 'package:copy_station/net/service_url.dart';
 import 'package:copy_station/net/service_wx.dart';
@@ -189,9 +188,9 @@ class _LoginPageState extends State<LoginPage> {
       highlightColor: Colors.transparent,
       onTap: () {
         print('开始进入接收手机验证码界面');
-        var formData = {'tel': phoneController.text.toString()};
+        var formData = {'phone': phoneController.text.toString()};
         post(formData, servicePath['sms']).then((val) {
-          if (val['code'] == 0) {
+          if (val['errCode'] == 0) {
 //            typeProvider.smsState = true;
             print('发送成功');
             String phone = phoneController.text.trim().toString();

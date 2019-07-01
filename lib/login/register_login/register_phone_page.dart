@@ -114,17 +114,16 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                print('进入到输入邮箱地址界面');
                 String phone = phoneController.text;
                 if (phone.isEmpty) {
                   Toast.show(context, '手机号不能为空!');
                   return;
                 }
                 print('获取到的手机号为:${phone}');
-                var formData = {'tel': phone};
+                var formData = {'phone': phone};
                 var typeProvider = Provider.of<TypeProvider>(context);
                 post(formData,servicePath['sms']).then((val) {
-                  if (val['code'] == 0) {
+                  if (val['errCode'] == 0) {
                     typeProvider.smsState = true;
                     print('发送成功');
                     Data.prefs.setString('registerPhone', phone);

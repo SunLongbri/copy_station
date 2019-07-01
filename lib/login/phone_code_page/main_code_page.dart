@@ -10,7 +10,6 @@ import 'package:copy_station/net/service_url.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,7 +35,6 @@ class MainCodePageState extends State<MainCodePage> {
   void initState() {
     _showBottomSheetCallback = _showBottomSheet;
     reGetCountdown();
-
   }
 
   @override
@@ -141,7 +139,6 @@ class MainCodePageState extends State<MainCodePage> {
   Timer _countdownTimer;
   String _codeCountdownStr = '获取验证码';
 
-
   void reGetCountdown() {
     setState(() {
       if (_countdownTimer != null) {
@@ -219,13 +216,14 @@ class MainCodePageState extends State<MainCodePage> {
         print('开始进入主界面');
         String phone = Data.prefs.getString('userPhone');
         String code = codeController.text.trim().toString();
-        var formData = {'mobile': phone, 'smsCode': code};
+        var formData = {'phone': phone, 'authcode': code};
         print('formData:${formData.toString()}');
         codeLogin(formData, servicePath['mobileLogin']).then((val) {
           print('手机号+验证码登录:${val}');
-          if (val['code'] == -1) {
-            Toast.show(context, '登录失败!');
+          if (val['errCode'] != 0) {
+            Toast.show(context, val['message']);
           } else {
+            Toast.show(context, '登录成功!');
             Application.router.navigateTo(context, Routes.homePage);
           }
         });

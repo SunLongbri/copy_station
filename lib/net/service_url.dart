@@ -1,15 +1,13 @@
-const serviceUrl = 'http://192.168.1.133:8020/';
-const smsUrl = 'http://192.168.1.133:8026/';
-const registerUrl = 'http://192.168.1.133:8823/';
+const serviceUrl = 'http://192.168.1.129:3100';
 
 const servicePath = {
-  'sms': smsUrl + 'sms/send_code', //发送手机号码
+  'sms': serviceUrl + '/api/user/register/authcode', //发送手机号码
 
-  'registerByTel': registerUrl + 'user/register_by_tel', //用户手机号+验证码 注册
-  'resetByTel': registerUrl + '/user/reset_password_by_tel', //用户手机号+验证码 注册
+  'registerByTel': serviceUrl + '/api/user/register', //用户手机号+验证码 注册
+  'getSalt': serviceUrl + '/api/user/get/salt', //获取盐值
 
-  'mobileLogin': serviceUrl + 'mobile/login', //用户通过手机+验证码快速登录
-  'login': serviceUrl + 'oauth/token', //用户通过手机+密码和邮箱加密码登录接口
+  'mobileLogin': serviceUrl + '/api/user/authcode/login', //用户通过手机+验证码快速登录
+  'login': serviceUrl + '/api/user/login', //用户通过手机+密码和邮箱加密码登录接口
 
-  'resetPass': registerUrl + 'user/reset_password_by_tel', //手机号重置密码
+  'resetPass': serviceUrl + '/api/user/modify/password', //手机号重置密码
 };

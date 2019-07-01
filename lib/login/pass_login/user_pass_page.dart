@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:convert/convert.dart';
 import 'package:copy_station/helper/Toast.dart';
 import 'package:copy_station/helper/data.dart';
 import 'package:copy_station/model/pass_login_model.dart';
 import 'package:copy_station/net/service_method.dart';
+import 'package:copy_station/net/service_url.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -185,6 +188,14 @@ class _UserPassPageState extends State<UserPassPage> {
     );
   }
 
+  /// md5 加密
+  String generateMd5(String data) {
+    var content = new Utf8Encoder().convert(data);
+    var digest = md5.convert(content);
+    // 这里其实就是 digest.toString()
+    return hex.encode(digest.bytes);
+  }
+
   Widget _arrowWidget(BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(750),
@@ -201,36 +212,41 @@ class _UserPassPageState extends State<UserPassPage> {
                 print('进入到输入邮箱地址界面');
                 String phone = phoneController.text;
                 String pass = passController.text;
+
                 if (phone.isEmpty || pass.isEmpty) {
                   Toast.show(context, '请输入用户名或密码!');
                   return;
                 }
                 print('获取到的手机号为:${phone}');
                 print('获取到的密码为:${pass}');
-                //登录接口的调用
-                loginByPhoneAndEmail(phone, pass).then((val) {
-                  print('登录请求返回结果:${val}');
-                  var data;
-                  if (val is Map<String, dynamic>) {
-                    data = val;
-                  } else {
-                    data = json.decode(val.toString());
-                  }
 
-                  print('data:${data}');
-                  PassLoginModel passLoginModel = PassLoginModel.fromJson(data);
-                  if (passLoginModel.error
-                          .trim()
-                          .toString()
-                          .contains('invalid_grant') ||
-                      passLoginModel.error
-                          .trim()
-                          .toString()
-                          .contains('unauthorized')) {
-                    Toast.show(context, '用户名或密码错误!');
+                var form = {'identity': phone};
+                post(form, servicePath['getSalt']).then((val) {
+                  if (val['errCode'] == 0) {
+                    String data = val['data'];
+
+                    String md5Pass = generateMd5(
+                        '${generateMd5('${phone}${generateMd5(pass)}')}${data}');
+
+                    //登录接口的调用
+                    loginByPhoneAndEmail(phone, md5Pass).then((val) {
+                      print('登录请求返回结果:${val}');
+                      var data;
+                      if (val is Map<String, dynamic>) {
+                        data = val;
+                      } else {
+                        data = json.decode(val.toString());
+                      }
+
+                      if (data['errCode'] == 0) {
+                        Toast.show(context, '登录成功!');
+                        Application.router.navigateTo(context, Routes.homePage);
+                      } else {
+                        Toast.show(context, data['message']);
+                      }
+                    });
                   } else {
-                    Toast.show(context, '登录成功!');
-                    Application.router.navigateTo(context, Routes.homePage);
+                    Toast.show(context, val['message']);
                   }
                 });
               },

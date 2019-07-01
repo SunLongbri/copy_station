@@ -8,6 +8,9 @@ import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:convert';
+import 'package:convert/convert.dart';
+import 'package:crypto/crypto.dart';
 
 class ForgetPassPage extends StatefulWidget {
   @override
@@ -156,12 +159,13 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                       onTap: () {
                         print('获取验证码');
                         reGetCountdown();
-                        var formData = {'tel': phoneController.text.toString()};
+                        var formData = {'phone': phoneController.text.toString()};
                         post(formData, servicePath['sms']).then((val) {
-                          if (val['code'] == 0) {
+                          if (val['errCode'] == 0) {
 //            typeProvider.smsState = true;
                             print('发送成功');
-                            String phone = phoneController.text.trim().toString();
+                            String phone =
+                                phoneController.text.trim().toString();
                             Data.prefs.setString('userPhone', phone);
                           } else {
 //            typeProvider.smsState = false;
@@ -368,6 +372,14 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
     );
   }
 
+  /// md5 加密
+  String generateMd5(String data) {
+    var content = new Utf8Encoder().convert(data);
+    var digest = md5.convert(content);
+    // 这里其实就是 digest.toString()
+    return hex.encode(digest.bytes);
+  }
+
   Widget _arrowWidget(BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(750),
@@ -396,18 +408,20 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                   Toast.show(context, '请完善登录信息!');
                   return;
                 }
-                var formData = {'newPass':pass,'smsCode':code,'tel':phone};
-                post(formData,servicePath['resetPass'])
-                    .then((val) {
-                      print('val:${val}');
-                      if(val['code'] == 0){
-                        Toast.show(context, '登录成功!');
-                        Application.router.navigateTo(context, Routes.homePage);
-                      }else{
-                        Toast.show(context, val['msg']);
-                      }
+                var formData = {
+                  'password': generateMd5(pass),
+                  'authcode': code,
+                  'identity': phone
+                };
+                post(formData, servicePath['resetPass']).then((val) {
+                  print('val:${val}');
+                  if (val['errCode'] == 0) {
+                    Toast.show(context, '登录成功!');
+                    Application.router.navigateTo(context, Routes.homePage);
+                  } else {
+                    Toast.show(context, val['message']);
+                  }
                   print('获取到的手机号为:${phone}');
-
                 });
               },
               child: Image.asset(

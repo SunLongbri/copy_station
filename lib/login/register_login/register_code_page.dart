@@ -76,10 +76,10 @@ class _RegisterCodePageState extends State<RegisterCodePage> {
               Toast.show(context, '请稍后再试!');
             } else {
               String phone = Data.prefs.getString('registerPhone');
-              var formData = {'tel': phone};
+              var formData = {'phoe': phone};
               post(formData, servicePath['sms']).then((val) {
 
-                if (val['code'] == 0) {
+                if (val['errCode'] == 0) {
                   reGetCountdown();
                   Toast.show(context, '发送成功!');
                 } else {
@@ -187,8 +187,8 @@ class _RegisterCodePageState extends State<RegisterCodePage> {
                 String phone = Data.prefs.getString('registerPhone');
 
                 var formData = {
-                  'code': codeController.text.toString().trim(),
-                  'tel': phone
+                  'authcode': codeController.text.toString().trim(),
+                  'phone': phone
                 };
                 print('注册的FormData为:${formData}');
                 post(formData, servicePath['registerByTel']).then((val) {
@@ -200,11 +200,11 @@ class _RegisterCodePageState extends State<RegisterCodePage> {
                     data = json.decode(val.toString());
                   }
 
-                  if(data['code']==0){
+                  if(data['errCode']==0){
                     Toast.show(context, '注册成功');
                     Application.router.navigateTo(context, '/home');
                   }else{
-                    Toast.show(context, data['msg']);
+                    Toast.show(context, data['message']);
                   }
 
                 });
