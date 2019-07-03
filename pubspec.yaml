@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^3.1.0
   shared_preferences: 0.5.3+1
   crypto: ^2.0.6
+  amap_base_search: ^0.4.1
 
 dev_dependencies:
   flutter_test:

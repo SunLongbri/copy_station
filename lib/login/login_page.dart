@@ -153,8 +153,8 @@ class _LoginPageState extends State<LoginPage> {
               String _url =
                   "https://www.easy-mock.com/mock/5c74edefa4b357117cec9ce5/flutter_shop/fluwx_pay";
               print('点击了微信登录 ... ');
-
-              loginByWX(context);
+              Application.router.navigateTo(context, Routes.homePage);
+//              loginByWX(context);
             },
             child: Image.asset(
               'images/register_wechat_icon.png',
