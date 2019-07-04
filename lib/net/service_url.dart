@@ -10,4 +10,5 @@ const servicePath = {
   'login': serviceUrl + '/api/user/login', //用户通过手机+密码和邮箱加密码登录接口
 
   'resetPass': serviceUrl + '/api/user/modify/password', //手机号重置密码
+  'housingList': serviceUrl + '/api/user/get/housing/list', //获取房源列表
 };

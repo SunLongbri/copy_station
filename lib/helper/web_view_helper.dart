@@ -26,7 +26,7 @@ class WebViewHelper extends StatelessWidget {
       height: 1334,
       padding: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
       child: WebviewScaffold(
-        supportMultipleWindows: true,
+
         geolocationEnabled: true,
         withJavascript: true,
         withLocalUrl: true,

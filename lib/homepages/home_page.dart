@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:copy_station/helper/Toast.dart';
+import 'package:copy_station/model/housing_model.dart';
 import 'package:copy_station/net/judge_network.dart';
+import 'package:copy_station/net/service_method.dart';
+import 'package:copy_station/net/service_url.dart';
 import 'package:copy_station/provider/city_provider.dart';
 import 'package:copy_station/provider/search_provider.dart';
 import 'package:copy_station/provider/type_provider.dart';
@@ -36,6 +40,18 @@ class HomePage extends StatelessWidget {
       //当前网络通畅
       print('homePage:{当前网络通畅}');
     }
+    var formData = {'limit':10,'offset':1};
+    post(formData,servicePath['housingList']).then((val){
+      print('接收到的数据为:${val}');
+      HousingModel housingModel = HousingModel.fromJson(val);
+      if(housingModel.errCode == 0){
+        //请求成功
+      }else{
+        //请求失败
+        Toast.show(context,'数据请求失败!');
+      }
+
+    });
     return WillPopScope(
       child: Scaffold(
           drawer: buildDrawer(),

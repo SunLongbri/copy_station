@@ -47,7 +47,6 @@ Future codeLogin(formData, String url) async {
   }
 }
 
-//输入手机号发送验证码
 Future post(formData, url) async {
   try {
     Response response;
