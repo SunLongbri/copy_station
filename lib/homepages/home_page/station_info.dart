@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:copy_station/helper/Toast.dart';
+import 'package:copy_station/model/housing_model.dart';
 import 'package:copy_station/provider/type_provider.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:copy_station/routers/routes.dart';
@@ -9,6 +10,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class StationInfo extends StatelessWidget {
+  final Rows rows;
+
+  const StationInfo({Key key, this.rows}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     TypeProvider typeProvider = Provider.of<TypeProvider>(context);
@@ -42,14 +47,21 @@ class StationInfo extends StatelessWidget {
 
   Widget _titlePic() {
     return Container(
-      margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
+      margin: EdgeInsets.only(
+          left: ScreenUtil().setWidth(20), right: ScreenUtil().setWidth(20)),
       width: ScreenUtil().setWidth(750),
       height: ScreenUtil().setHeight(300),
-      child: Image.asset(
-        'images/home_station1.png',fit: BoxFit.fill,
+      child: Image.network(
+        rows.masterImg,
         width: ScreenUtil().setWidth(750),
         height: ScreenUtil().setHeight(300),
-      ),
+      )
+//      Image.asset(
+//        'images/home_station1.png',fit: BoxFit.fill,
+//        width: ScreenUtil().setWidth(750),
+//        height: ScreenUtil().setHeight(300),
+//      )
+      ,
     );
   }
 
@@ -64,12 +76,16 @@ class StationInfo extends StatelessWidget {
                 top: ScreenUtil().setHeight(5),
                 bottom: ScreenUtil().setHeight(5)),
             child: Text(
-              '合谷文创-三友园',
+              '${rows.gardenName}'
+//              '合谷文创-三友园'
+              ,
               style: TextStyle(
-                  fontSize: ScreenUtil().setSp(30), color: Color(0xFF5A412E),fontWeight: FontWeight.w400),
+                  fontSize: ScreenUtil().setSp(30),
+                  color: Color(0xFF5A412E),
+                  fontWeight: FontWeight.w400),
             ),
           ),
-          Text('[轻奢]多元化空间+办公区域，打造低碳、高性价比的整合资源的...',
+          Text('${rows.housingName}',
               style: TextStyle(
                   fontSize: ScreenUtil().setSp(32),
                   color: Colors.brown,
@@ -77,14 +93,22 @@ class StationInfo extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(
-                'xxxx元起',
-                style:
-                    TextStyle(fontSize: ScreenUtil().setSp(26),color: Colors.brown, fontWeight: FontWeight.bold),
+                '${rows.price}',
+                style: TextStyle(
+                    fontSize: ScreenUtil().setSp(26),
+                    color: Colors.brown,
+                    fontWeight: FontWeight.bold),
               ),
-              Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),child: Text(
-                '面积：100㎡   容纳：20人',
-                style: TextStyle(fontSize: ScreenUtil().setSp(26),color: Color(0xFF5A412E),fontWeight: FontWeight.w400),
-              ),)
+              Padding(
+                padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+                child: Text(
+                  '面积：${rows.area}㎡   容纳：${rows.station}人',
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(26),
+                      color: Color(0xFF5A412E),
+                      fontWeight: FontWeight.w400),
+                ),
+              )
             ],
           ),
         ],

@@ -11,6 +11,15 @@ class TypeProvider with ChangeNotifier {
 
   bool _isPhone = true;
 
+  int _housingCount = 0;
+
+  get housingCount => _housingCount;
+
+  set housingCount(int count) {
+    _housingCount = count;
+    notifyListeners();
+  }
+
   get isPhone => _isPhone;
 
   get smsState => _smsState;

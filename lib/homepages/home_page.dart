@@ -19,20 +19,58 @@ import 'city_page/city_model.dart';
 import 'drawer/left_drawer.dart';
 import 'home_page/amap_navigator.dart';
 import 'home_page/auto_swipe.dart';
+import 'home_page/housing_list.dart';
 import 'home_page/station_info.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Rows> rows = [];
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   Future<void> requestPermission(PermissionGroup permission) async {
     final List<PermissionGroup> permissions = <PermissionGroup>[permission];
     final Map<PermissionGroup, PermissionStatus> permissionRequestResult =
         await PermissionHandler().requestPermissions(permissions);
   }
 
+  TypeProvider typeProvider;
+
+  void _getHousingInfo() {
+    var formData = {'limit': 10, 'offset': 1};
+    post(formData, servicePath['housingList']).then((val) {
+      print('接收到的数据为:${val}');
+      HousingModel housingModel = HousingModel.fromJson(val);
+      if (housingModel.errCode == 0) {
+        //请求成功
+        setState(() {
+          Data data = housingModel.data;
+          int totalCount = data.count;
+          rows = data.rows;
+          print('房源数量为:${rows.length}');
+        });
+      } else {
+        //请求失败
+        Toast.show(context, '数据请求失败!');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getHousingInfo();
     requestPermission(PermissionGroup.location);
     judgeNetWork(context);
     TypeProvider typeProvider = Provider.of<TypeProvider>(context);
+
     if (typeProvider.netError == true) {
       //当前断网
       print('homePage:{当前断网}');
@@ -40,35 +78,24 @@ class HomePage extends StatelessWidget {
       //当前网络通畅
       print('homePage:{当前网络通畅}');
     }
-    var formData = {'limit':10,'offset':1};
-    post(formData,servicePath['housingList']).then((val){
-      print('接收到的数据为:${val}');
-      HousingModel housingModel = HousingModel.fromJson(val);
-      if(housingModel.errCode == 0){
-        //请求成功
-      }else{
-        //请求失败
-        Toast.show(context,'数据请求失败!');
-      }
 
-    });
     return WillPopScope(
       child: Scaffold(
           drawer: buildDrawer(),
           appBar: AppBar(
             leading: Builder(
               builder: (context) => GestureDetector(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
-                    child: Image.asset('images/home_leading_icon.png'),
-                  )
-                ),
-                onTap: () => Scaffold.of(context).openDrawer(),
-              ),
+                    child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: ScreenUtil().setWidth(20),
+                              right: ScreenUtil().setWidth(20)),
+                          child: Image.asset('images/home_leading_icon.png'),
+                        )),
+                    onTap: () => Scaffold.of(context).openDrawer(),
+                  ),
             ),
-
             backgroundColor: Colors.white,
             elevation: 0,
             title: _titleWidget(context),
@@ -78,14 +105,13 @@ class HomePage extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               Container(
+                height: ScreenUtil().setHeight(1334),
                 child: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
                       AutoSwipe(),
                       Amap_Navigator(),
-                      StationInfo(),
-                      StationInfo(),
-                      StationInfo(),
+                      HousingList(rows: rows),
                     ],
                   ),
                 ),
