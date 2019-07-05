@@ -11,11 +11,11 @@ class HousingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: rows.length * 265.0,
+      height: rows.length * 240.0,
       child: ListView.builder(
           controller: ScrollController(keepScrollOffset: false),
           physics: NeverScrollableScrollPhysics(),
-          itemCount: 10,
+          itemCount: rows.length,
           itemBuilder: (BuildContext context, int position) {
             return StationInfo(rows: rows[position]);
           }),

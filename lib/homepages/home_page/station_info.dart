@@ -55,13 +55,8 @@ class StationInfo extends StatelessWidget {
         rows.masterImg,
         width: ScreenUtil().setWidth(750),
         height: ScreenUtil().setHeight(300),
-      )
-//      Image.asset(
-//        'images/home_station1.png',fit: BoxFit.fill,
-//        width: ScreenUtil().setWidth(750),
-//        height: ScreenUtil().setHeight(300),
-//      )
-      ,
+        fit: BoxFit.fill,
+      ),
     );
   }
 
@@ -77,7 +72,6 @@ class StationInfo extends StatelessWidget {
                 bottom: ScreenUtil().setHeight(5)),
             child: Text(
               '${rows.gardenName}'
-//              '合谷文创-三友园'
               ,
               style: TextStyle(
                   fontSize: ScreenUtil().setSp(30),
@@ -93,7 +87,7 @@ class StationInfo extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(
-                '${rows.price}',
+                '${rows.price.split('/')[0]}元起',
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(26),
                     color: Colors.brown,

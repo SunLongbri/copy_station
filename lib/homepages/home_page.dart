@@ -11,6 +11,7 @@ import 'package:copy_station/provider/search_provider.dart';
 import 'package:copy_station/provider/type_provider.dart';
 import 'package:copy_station/routers/application.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,6 @@ import 'drawer/left_drawer.dart';
 import 'home_page/amap_navigator.dart';
 import 'home_page/auto_swipe.dart';
 import 'home_page/housing_list.dart';
-import 'home_page/station_info.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -29,10 +29,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Rows> rows = [];
+  GlobalKey<RefreshFooterState> _footerkey =
+      new GlobalKey<RefreshFooterState>();
 
   @override
   void initState() {
-
+    _getHousingInfo();
     super.initState();
   }
 
@@ -43,9 +45,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   TypeProvider typeProvider;
+  int pages = 1;
 
   void _getHousingInfo() {
-    var formData = {'limit': 10, 'offset': 1};
+    var formData = {'limit': 10, 'offset': pages};
     post(formData, servicePath['housingList']).then((val) {
       print('接收到的数据为:${val}');
       HousingModel housingModel = HousingModel.fromJson(val);
@@ -66,7 +69,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _getHousingInfo();
     requestPermission(PermissionGroup.location);
     judgeNetWork(context);
     TypeProvider typeProvider = Provider.of<TypeProvider>(context);
@@ -102,26 +104,58 @@ class _HomePageState extends State<HomePage> {
             titleSpacing: 0.1,
             actions: <Widget>[_cityWidget(context)],
           ),
-          body: Stack(
-            children: <Widget>[
-              Container(
-                height: ScreenUtil().setHeight(1334),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      AutoSwipe(),
-                      Amap_Navigator(),
-                      HousingList(rows: rows),
-                    ],
-                  ),
-                ),
+          body: EasyRefresh(
+              refreshFooter: ClassicsFooter(
+                key: _footerkey,
+                bgColor: Colors.white,
+                textColor: Colors.brown,
+                moreInfoColor: Colors.brown,
+                showMore: true,
+                noMoreText: '',
+                moreInfo: '加载中',
+                loadReadyText: '上拉加载',
               ),
-              typeProvider.netError
-                  ? _netTitleError('当前网络不可用，请检查你的网络设置')
-                  : Container(),
+              loadMore: () async {
+                print("开始加载更多 ... ");
+                var formData = {'limit': 10, 'offset': pages++};
+                await post(formData, servicePath['housingList']).then((val) {
+                  print('下拉加载接收到的数据为:${val}');
+                  HousingModel housingModel = HousingModel.fromJson(val);
+                  if (housingModel.errCode == 0) {
+                    //请求成功
+                    setState(() {
+                      Data data = housingModel.data;
+                      int totalCount = data.count;
+                      List<Rows> refreshRows = data.rows;
+                      refreshRows.forEach((item) =>rows.add(item));
+                      print('刷新房源数量为:${rows.length}');
+                    });
+                  } else {
+                    //请求失败
+                    Toast.show(context, '数据请求失败!');
+                  }
+                });
+              },
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: ScreenUtil().setHeight(1334),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          AutoSwipe(),
+                          Amap_Navigator(),
+                          HousingList(rows: rows),
+                        ],
+                      ),
+                    ),
+                  ),
+                  typeProvider.netError
+                      ? _netTitleError('当前网络不可用，请检查你的网络设置')
+                      : Container(),
 //              _netErrorContent()
-            ],
-          )),
+                ],
+              ))),
       onWillPop: () {
         exit(0);
       },

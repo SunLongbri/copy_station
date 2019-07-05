@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: 0.5.3+1
   crypto: ^2.0.6
   amap_base_search: ^0.4.1
+  flutter_easyrefresh: ^1.2.7
 
 dev_dependencies:
   flutter_test:
