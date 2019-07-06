@@ -40,12 +40,16 @@ dependencies:
   fluwx: ^0.6.2
   tobias: ^0.1.5
   dio: ^2.1.7
+  amap_location: 0.1.0
   connectivity: 0.4.3+2
   fluttertoast: ^3.1.0
   shared_preferences: 0.5.3+1
   crypto: ^2.0.6
   amap_base_search: ^0.4.1
   flutter_easyrefresh: ^1.2.7
+  flare_flutter: ^1.5.0
+  get_ip: ^0.3.0
+
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +72,7 @@ flutter:
     - images/
     - assets/data/china.json
     - assets/data/contacts.json
+    - flrs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

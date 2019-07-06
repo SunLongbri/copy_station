@@ -7,6 +7,8 @@ import 'package:copy_station/provider/search_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:get_ip/get_ip.dart';
+import 'package:amap_location/amap_location.dart';
 
 class SearchWorkPage extends StatelessWidget {
   @override
@@ -85,7 +87,13 @@ class SearchWorkPage extends StatelessWidget {
         onTap: () {
           print('点击了搜索按钮');
           String searchString = searchController.toString().trim();
-          getRequest('上海市联航路地铁站').then((val) {
+          Map<String, String> paras = {
+            "key": "ee7302526e44601b1979616f58a7f4c1",
+            "address": "上海市联航路地铁站"
+          };
+          getRequest(
+                  paras, 'https://restapi.amap.com/v3/geocode/geo?parameters')
+              .then((val) {
             print('搜索接收到的数据为:${val}');
             AmapModel amapModel = AmapModel.fromJson(val);
             print(amapModel.status);
@@ -96,10 +104,12 @@ class SearchWorkPage extends StatelessWidget {
               List<String> data = geoCodes.location.split(',');
               String longitude = data[0];
               String latitude = data[1];
-              LoadGeoSquare(1000, double.parse(longitude), double.parse(latitude));
+              LoadGeoSquare(
+                  1000, double.parse(longitude), double.parse(latitude));
             }
           });
           searchProvider.isSearch = true;
+          _getAddress();
         },
         child: Text(
           '搜索',
@@ -107,5 +117,17 @@ class SearchWorkPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future _getAddress() async {
+    await AMapLocationClient.startup(new AMapLocationOption(
+        desiredAccuracy: CLLocationAccuracy.kCLLocationAccuracyHundredMeters));
+    await AMapLocationClient.getLocation(true);
+    AMapLocationClient.onLocationUpate.listen((AMapLocation loc) {
+      print('当前的位置状态：${loc}');
+    });
+
+    AMapLocationClient.startLocation();
+    return await GetIp.ipAddress;
   }
 }

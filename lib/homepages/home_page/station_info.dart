@@ -39,7 +39,9 @@ class StationInfo extends StatelessWidget {
             bottom: ScreenUtil().setHeight(25),
             top: ScreenUtil().setHeight(15)),
         child: Column(
-          children: <Widget>[_titlePic(), _detail()],
+          children: <Widget>[
+            _titlePic(),
+            _detail()],
         ),
       ),
     );

@@ -20,6 +20,7 @@
         android:label="copy_station"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="ac746ce123db7e6cec8161ddfcc6dbe5" ></meta-data>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

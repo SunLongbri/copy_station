@@ -9,12 +9,13 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:provider/provider.dart';
-
+import 'package:amap_location/amap_location.dart';
 import 'provider/type_provider.dart';
 
 void main() {
   runApp(MyApp());
 //  debugPaintSizeEnabled=true;
+  AMapLocationClient.setApiKey("ac746ce123db7e6cec8161ddfcc6dbe5");
   FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
 }
 

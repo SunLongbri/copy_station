@@ -65,18 +65,14 @@ Future post(formData, url) async {
   }
 }
 
-Future getRequest(String location) async {
+Future getRequest(paras,url) async {
   try {
     Response response;
     Dio dio = Dio();
     dio.options.contentType = ContentType.parse('application/json');
     dio.options.connectTimeout = 15000;
-    Map<String, String> paras = {
-      "key": "ee7302526e44601b1979616f58a7f4c1",
-      "address": location
-    };
 
-    String amapUrl = 'https://restapi.amap.com/v3/geocode/geo?parameters';
+    String amapUrl = url;
     response = await dio.get(amapUrl, queryParameters: paras);
     if (response.statusCode == 200) {
       return response.data;
