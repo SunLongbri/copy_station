@@ -1,16 +1,17 @@
 # copy_station
 
-A new Flutter application.
+# 首页
 
-## Getting Started
+<image src = "https://github.com/SunLongbri/copy_station/blob/master/image_1.jpg" width = 200 height = 400>
+  
+  
+# 侧边栏页面
 
-This project is a starting point for a Flutter application.
+<image src = "https://github.com/SunLongbri/copy_station/blob/master/image_2.jpg" width = 200 height = 400>
+  
+# 个人中心页面
 
-A few resources to get you started if this is your first Flutter project:
+<image src = "https://github.com/SunLongbri/copy_station/blob/master/image_3.jpg" width = 200 height = 400>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+
